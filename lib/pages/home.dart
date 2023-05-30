@@ -27,42 +27,71 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(
           height: 40,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(
-                'Category',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18),
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Container(
-              height: 120,
-              // color: Colors.green,
-              child: ListView.separated(
-                  separatorBuilder: (context, index) => SizedBox(width: 25),
-                  padding: EdgeInsets.only(left: 20, right: 20),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: 100,
-                      decoration: BoxDecoration(
-                          color: categories[index].boxColor.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(16)),
-                    );
-                  }),
-            )
-          ],
-        )
+        _categoriesSection()
       ]),
+    );
+  }
+
+  //* Categories section
+
+  Column _categoriesSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        //Categories text
+        const Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Text(
+            'Category',
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.w600, fontSize: 18),
+          ),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+
+        // ListView of categories
+        Container(
+          height: 120,
+          child: ListView.separated(
+              separatorBuilder: (context, index) => const SizedBox(width: 25),
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              scrollDirection: Axis.horizontal,
+              itemCount: categories.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: categories[index].boxColor.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(16)),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: const BoxDecoration(
+                              color: Colors.white, shape: BoxShape.circle),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SvgPicture.asset(
+                              categories[index].iconPath,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          categories[index].name,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: 14),
+                        )
+                      ]),
+                );
+              }),
+        )
+      ],
     );
   }
 
